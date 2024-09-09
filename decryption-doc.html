@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decryption Algorithms Overview</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a7083917a9.js" crossorigin="anonymous"></script>
+
+    <style>
+        /* Universal reset */
+        #logo-wrapper {
+            text-align: left;
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            z-index: 3;
+        }
+    
+        #logo-wrapper img {
+            width: 190px;
+            transition: transform 0.3s ease, box-shadow 0.5s ease-in-out;
+            border: 3px solid transparent;
+            padding: 5px;
+            position: relative;
+        }
+    
+        #logo-wrapper img:hover {
+            animation: snakeBorder 1.5s infinite linear;
+            transform: scale(1.1);
+            box-shadow: 0 0 20px #00f6ff;
+        }
+          #header {
+            position: relative;
+            z-index: 2;
+            background-color: transparent;
+            padding: 20px;
+        }
+    
+        #nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+        }
+    
+        #nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 22px;
+            padding: 15px;
+            transition: color 0.3s ease, transform 0.3s ease;
+            position: relative;
+        }
+    
+        #nav a:hover {
+            animation: snakeBorder 1.5s infinite linear;
+            font-size: 25px;
+            color: #0ec5ea;
+            transform: scale(1.1);
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Orbitron', sans-serif;
+            color: white;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Full page video background */
+        .background-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        h1, h2, h3 {
+            color: #88cc88;
+            text-align: center;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-top: 20px;
+        }
+
+        h2 {
+            font-size: 2em;
+            margin: 10px 0;
+        }
+
+        h3 {
+            font-size: 1.5em;
+            color: #ff6666;
+        }
+
+        p {
+            font-size: 1.1em;
+            line-height: 1.6em;
+            margin: 15px;
+            color: #d4dbde;
+            animation: fadeInUp 1.5s ease-in-out;
+        }
+
+        .section {
+            background-color: rgba(0, 0, 0, 0.8);
+            border-left: 5px solid #44cc44;
+            border-radius: 10px;
+            margin: 20px auto;
+            width: 80%;
+            padding: 20px;
+            transition: transform 0.3s ease;
+            animation: slideIn 1.5s ease-in-out;
+        }
+
+        .section:hover {
+            transform: scale(1.03);
+        }
+
+        .example-box {
+            background-color: rgba(0, 0, 0, 0.9);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 4px solid #cc5555;
+            animation: fadeInUp 1.5s ease-in-out;
+        }
+
+        table {
+            width: 90%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            color: #ccc;
+            animation: fadeInUp 1.5s ease-in-out;
+        }
+
+        table, th, td {
+            border: 1px solid #555;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        h2, th {
+            background-color: #333;
+            color: #44cc44;
+            animation: pulse 2s infinite;
+        }
+        h3{
+            background-color: #333;
+            color: #ff6666;
+            animation: pulse1 2s infinite;
+        }@keyframes pulse1 {
+            0% { box-shadow: 0 0 10px #ac4848}
+            50% { box-shadow: 0 0 20px #ff6666 }
+            100% { box-shadow: 0 0 10px #6a0926 }
+        }
+
+        /* Hover effect for table rows */
+        tr {
+            transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+        }
+
+        tr:hover {
+            background-color: #2b2b2b;
+            color: #ff6666;
+            cursor: pointer;
+        }
+
+        /* Pulse effect for table headers */
+        @keyframes pulse {
+            0% { box-shadow: 0 0 10px rgba(68, 204, 68, 0.5); }
+            50% { box-shadow: 0 0 20px rgba(68, 204, 68, 1); }
+            100% { box-shadow: 0 0 10px rgba(68, 204, 68, 0.5); }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideIn {
+            0% { opacity: 0; transform: translateX(-100px); }
+            100% { opacity: 1; transform: translateX(0); }
+        }
+
+        .summary {
+            text-align: center;
+            margin: 50px;
+            padding: 20px;
+            background-color: #333;
+            border-radius: 10px;
+            color: #fff;
+            animation: fadeInUp 1s ease-in-out;
+        }
+
+        a {
+            color: #88cc88;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        a:hover {
+            color: #ff6666;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: #777;
+            margin-top: 40px;
+        }
+
+        /* Button Styles */
+        .back-button {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 10px 20px;
+            font-size: 18px;
+            border: 2px solid #0ec5ea;
+            border-radius: 5px;
+            color: #0ec5ea;
+            background-color: transparent;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s ease;
+            font-family: 'Orbitron', sans-serif;
+            text-decoration: none;
+        }
+
+        .back-button:hover {
+            animation: snakeBorder 1.5s infinite linear;
+            color: #11c2e6;
+            transform: scale(1.1);
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.7);
+        }
+
+        /* Snake Animation */
+        @keyframes snakeBorder {
+            0% {
+                box-shadow: 0 0 5px #00f6ff, inset 0 0 12px #ff004d;
+            }
+            50% {
+                box-shadow: 0 0 10px #ff004d, inset 0 0 10px #00f6ff;
+            }
+            100% {
+                box-shadow: 0 0 5px #00f6ff, inset 0 0 10px #ff004d;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Video background -->
+    <video class="background-video" autoplay muted loop>
+        <source src="Back.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <!-- Header -->
+    <header>
+        <h1>Decryption Algorithms Overview</h1>
+    </header>
+
+    <!-- Symmetric Decryption Section -->
+    <section class="section">
+        <h2>Introduction</h2>
+        <p>
+            Decryption is the process of converting encrypted or encoded data back into its original form, making it readable or accessible. It plays a critical role in modern security frameworks by ensuring that only authorized entities can access sensitive information.
+        </p>
+    </section>
+
+    <section class="section">
+        <h2>Symmetric Decryption</h2>
+        <p>Symmetric decryption uses the same key that was used for encryption to decrypt the data. It is often used in systems where speed is important, and both parties share the same key.</p>
+
+        <table>
+            <tr>
+                <th>Algorithm</th>
+                <th>Key Size (bits)</th>
+                <th>Block Size (bits)</th>
+                <th>Strengths</th>
+                <th>Weaknesses</th>
+                <th>Common Use Cases</th>
+            </tr>
+            <tr>
+                <td>AES</td>
+                <td>128, 192, 256</td>
+                <td>128</td>
+                <td>High security, efficient</td>
+                <td>Resource-heavy for smaller devices</td>
+                <td>Data encryption/decryption</td>
+            </tr>
+            <tr>
+                <td>DES</td>
+                <td>56</td>
+                <td>64</td>
+                <td>Simple to implement</td>
+                <td>Vulnerable to brute-force attacks</td>
+                <td>Legacy systems</td>
+            </tr>
+            <tr>
+                <td>Blowfish</td>
+                <td>32-448</td>
+                <td>64</td>
+                <td>Efficient</td>
+                <td>Not as widely used as AES</td>
+                <td>File encryption, data encryption</td>
+            </tr>
+        </table>
+    </section>
+
+    <!-- Asymmetric Decryption Section -->
+    <section class="section">
+        <h2>Asymmetric Decryption</h2>
+        <p>Asymmetric decryption uses a private key to decrypt data that was encrypted using a public key. This technique is commonly used for secure communications and in digital signatures.</p>
+
+        <table>
+            <tr>
+                <th>Algorithm</th>
+                <th>Key Generation</th>
+                <th>Strengths</th>
+                <th>Weaknesses</th>
+                <th>Common Use Cases</th>
+            </tr>
+            <tr>
+                <td>RSA</td>
+                <td>Prime factorization</td>
+                <td>High security</td>
+                <td>Slower than symmetric decryption</td>
+                <td>Digital signatures, secure key exchange</td>
+            </tr>
+            <tr>
+                <td>ECC</td>
+                <td>Elliptic curve points</td>
+                <td>Smaller keys, faster</td>
+                <td>More complex key management</td>
+                <td>Mobile encryption, secure communications</td>
+            </tr>
+        </table>
+    </section>
+
+    <!-- Cryptanalysis Section -->
+    <section class="section">
+        <h2>Decryption of Hashes</h2>
+        <p>While hashes are not meant to be decrypted (since they are one-way functions), techniques like rainbow tables and brute-force attacks attempt to reverse the process by finding the original input that corresponds to a given hash.</p>
+
+        <div class="example-box">
+            <h3>Examples of Decryption Techniques</h3>
+            <p>Rainbow tables, brute-force, dictionary attacks.</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2>Decryption Techniques Used for Cryptanalysis</h2>
+        <p>Cryptanalytic attacks target vulnerabilities in encryption algorithms to reverse the encryption process without knowing the key. These include techniques like side-channel attacks and differential cryptanalysis.</p>
+
+        <div class="example-box">
+            <h3>Common Cryptanalytic Techniques</h3>
+            <p>Differential cryptanalysis, linear cryptanalysis, side-channel attacks.</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2>Other Decryption Methods</h2>
+        <p>Decryption methods like homomorphic decryption allow for computations on encrypted data without needing to fully decrypt the data. This is used in applications like secure data analysis.</p>
+
+        <div class="example-box">
+            <h3>Examples of Other Algorithms</h3>
+            <p>Homomorphic decryption, lattice-based decryption (quantum-resistant).</p>
+        </div>
+    </section>
+
+    <!-- Back Button -->
+    <div style="text-align: center;">
+        <a href="index.html" class="back-button">Back to Home</a>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>Decryption plays a vital role in maintaining secure communication and data integrity in an increasingly interconnected world. Understanding various decryption methods ensures that data remains accessible only to authorized parties.</p>
+        <p>&copy; 2024 Decryption Algorithms Overview</p>
+    </footer>
+</body>
+</html>

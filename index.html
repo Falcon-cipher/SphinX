@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FALCON's CIPHER SPHINX</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a7083917a9.js" crossorigin="anonymous"></script>
+    <link rel="icon" href="LogoZ.png" type="image/png">
+
+    <style>
+        /* Universal reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Orbitron', sans-serif;
+            color: white;
+            overflow-x: hidden;
+            background: url('backup.jpg') no-repeat center center fixed; /* Fallback background image */
+            background-size: cover;
+        }
+
+        /* Click ripple effect */
+        body::before {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            width: 150px;
+            height: 150px;
+            transform: scale(0);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        body:active::before {
+            animation: ripple 0.6s ease-out;
+        }
+
+        @keyframes ripple {
+            to {
+                transform: scale(5);
+                opacity: 0;
+            }
+        }
+
+        /* Full page video background */
+        .background-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        /* Logo Styling */
+        #logo-wrapper {
+            text-align: left;
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            z-index: 3;
+        }
+
+        #logo-wrapper img {
+            width: 190px;
+            transition: transform 0.3s ease, box-shadow 0.5s ease-in-out;
+            border: 3px solid transparent;
+            padding: 5px;
+            position: relative;
+        }
+
+        #logo-wrapper img:hover {
+            animation: snakeBorder 1.5s infinite linear;
+            transform: scale(1.1);
+            box-shadow: 0 0 20px #00f6ff;
+        }
+
+        /* Snake Animation for logo and buttons */
+        @keyframes snakeBorder {
+            0% {
+                box-shadow: 0 0 5px #00f6ff, inset 0 0 12px #ff004d;
+            }
+            50% {
+                box-shadow: 0 0 10px #ff004d, inset 0 0 10px #00f6ff;
+            }
+            100% {
+                box-shadow: 0 0 5px #00f6ff, inset 0 0 10px #ff004d;
+            }
+        }
+
+        /* Header and Navigation */
+        #header {
+            position: relative;
+            z-index: 2;
+            background-color: transparent;
+            padding: 20px;
+        }
+
+        #nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+        }
+
+        #nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 22px;
+            padding: 15px;
+            transition: color 0.3s ease, transform 0.3s ease;
+            position: relative;
+        }
+
+        #nav a:hover {
+            animation: snakeBorder 1.5s infinite linear;
+            font-size: 25px;
+            color: #0ec5ea;
+            transform: scale(1.1);
+        }
+
+        /* Title Section with Eagle Animation */
+        .title-container {
+            text-align: center;
+            margin-top: 100px;
+            animation: eagleFlyIn 1s ease-out;
+        }
+
+        .title {
+            font-size: 5em;
+            margin-bottom: 10px;
+            transition: transform 0.3s ease, color 0.3s ease;
+            position: relative;
+        }
+
+        .title:hover {
+            transform: scale(1.2);
+            color: #0ec5ea;
+        }
+
+        /* Eagle Swooping Animation */
+        @keyframes eagleFlyIn {
+            from {
+                opacity: 0;
+                transform: translateY(-300px) scale(0.5);
+                font-size: 3em;
+            }
+            to {
+                opacity: 1;
+                transform: translateY() scale(1);
+            }
+        }
+
+        /* Container */
+        .container {
+            margin: 50px auto;
+            text-align: center;
+            max-width: 1000px;
+            z-index: 2;
+        }
+
+        h3 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .b-container {
+            margin: 20px 0;
+        }
+
+        /* Buttons: Encrypt & Decrypt with Snake Animation */
+        .animated-button {
+            margin: 20px;
+            padding: 15px 35px;
+            font-family: 'Orbitron';
+            font-size: 18px;
+            border: 2px solid #0ec5ea;
+            border-radius: 5px;
+            color: #0ec5ea;
+            background-color: transparent;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s ease;
+        }
+
+        .animated-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300%;
+            height: 300%;
+            background: rgba(0, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            transform: translate(-50%, -50%) scale(0);
+            opacity: 0;
+        }
+
+        .animated-button:hover::before {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+        }
+
+        .animated-button:hover {
+            animation: snakeBorder 1.5s infinite linear;
+            color: #11c2e6;
+            transform: scale(1.1);
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.7);
+        }
+
+        /* Glow effect for project cards */
+        .box :hover {
+            animation: glow 1.5s infinite alternate;
+            box-shadow: 0px 0px 30px rgba(255, 0, 150, 0.7);
+        }
+
+        @keyframes glow {
+            from {
+                box-shadow: 0px 0px 15px rgba(255, 0, 150, 0.4);
+            }
+            to {
+                box-shadow: 0px 0px 30px rgba(255, 0, 150, 0.7);
+            }
+        }
+        /* Project cards */
+        .row {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 40px;
+            animation: slideInCards 1s ease-out;
+        }
+
+        .box {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            width: 300px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s ease;
+        }
+
+        .box img {
+            max-width: 100%;
+            border-radius: 10px;
+        }
+
+        .box:hover {
+            animation: snakeBorder 1.5s infinite linear;
+            transform: scale(1.05);
+            box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.2);
+            animation: glow 1.5s infinite alternate;
+            box-shadow: 0px 0px 30px rgba(255, 0, 150, 0.7);
+        }
+
+        /* Cards slide-in animation */
+        @keyframes slideInCards {
+            from {
+                opacity: 0;
+                transform: translateY(100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Pulse effect for buttons */
+        .animated-button {
+            animation: pulse 2s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(0, 255, 255, 0.7);
+            }
+            70% {
+                transform: scale(1.1);
+                box-shadow: 0 0 25px 25px rgba(0, 255, 255, 0);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(0, 255, 255, 0);
+            }
+        }
+
+        /* Developer contact section */
+        .contact-section {
+            margin: 50px 0;
+            text-align: center;
+            padding: 50px;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .developer-info {
+            display: flex;
+            justify-content: center;
+            gap: 70px;
+            flex-wrap: wrap;
+        }
+
+        /* Circular file-styled developer images */
+        .developer-card {
+            width: 320px;
+            height:300px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* Add shake animation to developer cards */
+        .developer-card:hover {
+            animation: shake 0.6s ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% {
+                transform: translateX(0);
+            }
+            25% {
+                transform: translateX(-10px);
+            }
+            50% {
+                transform: translateX(10px);
+            }
+        }
+
+        .middle-developer {
+            width: 370px;
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
+        }
+
+        .middle-developer:hover {
+            transform: scale(1.15);
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.7);
+            animation: pulse 1.5s infinite alternate ease-in-out;
+        }
+
+        .developer-card img {
+            margin-top: 20px;
+            border-radius: 50%;
+            width: 160px;
+            height: 160px;
+            object-fit: cover;
+            border: 5px solid #0ec5ea;
+            padding: 5px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .developer-card img:hover {
+            animation: snakeBorder 1.5s infinite linear;
+            transform: scale(1.1);
+            box-shadow: 0px 0px 20px rgba(0, 255, 255, 0.7);
+        }
+
+        /* Developer names with Snake Animation */
+        .developer-card h3:hover {
+            animation: snakeBorder 1.5s infinite linear;
+            transform: scale(1.1);
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.7);
+        }
+
+        .contact-links a {
+            font-size: 20px;
+            margin: 0 10px;
+            color: #0ec5ea;
+            text-decoration: none;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .contact-links a:hover {
+            animation: snakeBorder 1.5s infinite linear;
+            color: #11c2e6;
+            transform: scale(1.2);
+        }
+
+        /* Footer */
+        #footer {
+            text-align: center;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Video background -->
+    <video class="background-video" autoplay muted loop>
+        <source src="https://github.com/Falcon-cipher/cssss/blob/main/Back.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <!-- Logo -->
+    <div id="logo-wrapper">
+        <a href="#">
+            <img src="logo.png" alt="FALCON Logo">
+        </a>
+    </div>
+
+    <!-- Header and Navigation -->
+    <div id="header">
+        <nav id="nav">
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Title Section -->
+    <div class="title-container">
+        <h1 class="title">FALCON's</h1>
+        <h1 class="title">Cipher SphinX</h1>
+    </div>
+
+    <!-- Mission Section and Buttons -->
+    <div class="container">
+        <h3>MISSION</h3>
+        <p>“We believe everyone should have access to security and privacy tools, whoever they are, wherever they are, or whatever their personal beliefs are, as a fundamental human right.”</p>
+        <div class="b-container">
+            <button onclick="location.href='encryption-doc.html'" class="animated-button">Encrypt</button>
+            <button onclick="location.href='decryption-doc.html'" class="animated-button">Decrypt</button>
+        </div>
+    </div>
+
+    <!-- Project Section -->
+    <div class="container">
+        <div id="projects" class="row">
+            <div class="box">
+                <a href="about.html" class="image"><img src="card1.jpg" alt="FALCON Library"></a>
+                <h3>FALCON Library</h3>
+                <p><a href="about.html">Learn more</a></p>
+            </div>
+            <div class="box">
+                <a href="http://localhost:8502" class="image" onclick="runAlgorithmPrediction()"><img src="card2.jpg" alt="Algorithm Prediction"></a>
+                <h3>Algorithm Prediction</h3>
+                <p><a href="http://localhost:8502" onclick="runAlgorithmPrediction()">Learn more</a></p>
+            </div>
+            <div class="box">
+                <a href="http://localhost:8501" class="image"><img src="card3.jpg" alt="E&C"></a>
+                <h3>Encryption & Decryption</h3>
+                <p><a href="http://localhost:8501">Learn more</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Section -->
+    <div class="contact-section">
+        <h2>Contact the Developers</h2><br><br>
+        <div class="developer-info">
+            <div class="developer-card middle-developer">
+                <img src="https://avatars.githubusercontent.com/u/100595876?v=4" alt="Datta Muthevi">
+                <h3>Datta Muthevi</h3>
+                <p>Full Stack Web Developer</p>
+                <div class="contact-links">
+                    <a href="https://www.instagram.com/sr_datta_twenty7/" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://twitter.com/datta_muthevi" target="_blank"><i class="fab fa-twitter"></i></a>
+                    <a href="mailto:raghudatta99@gmail.com"><i class="fas fa-envelope"></i></a>
+                    <a href="tel:7995483847"><i class="fas fa-phone"></i></a>
+                    <a href="https://www.linkedin.com/in/raghu-datta-muthevi-7323b6260/" target="_blank"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://github.com/Dattamuthevi" target="_blank"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+
+            <!-- Middle Developer Card with Extra Styles -->
+            <div class="developer-card middle-developer">
+                <img src="https://avatars.githubusercontent.com/u/100593255?v=4" alt="Jaswanth Kollipara">
+                <h3>Jaswanth Kollipara</h3>
+                <p>DS and Networking Specialist</p>
+                <div class="contact-links">
+                    <a href="https://www.instagram.com/jaswanthkollipara/" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://x.com/K_Jaswanth3" target="_blank"><i class="fab fa-twitter"></i></a>
+                    <a href="mailto:kjaswanth28@gmail.com"><i class="fas fa-envelope"></i></a>
+                    <a href="tel:9959707255"><i class="fas fa-phone"></i></a>
+                    <a href="https://www.linkedin.com/in/jaswanthkollipara/" target="_blank"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://github.com/jaswanthgec" target="_blank"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+
+            <div class="developer-card middle-developer">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTGob0hZeRC0JQ7waW9Qshw6rNI1iythulSA&s" alt="Venkata Reddy">
+                <h3>Venkata Reddy</h3>
+                <p>Full Stack Web Developer</p>
+                <div class="contact-links">
+                    <a href="https://www.instagram.com/sr_datta_twenty7/" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+                    <a href="mailto:raghudatta99@gmail.com"><i class="fas fa-envelope"></i></a>
+                    <a href="tel:7995483847"><i class="fas fa-phone"></i></a>
+                    <a href="https://www.linkedin.com/in/raghu-datta-muthevi-7323b6260/" target="_blank"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://github.com/Dattamuthevi" target="_blank"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div id="footer">
+        <p>© 2024 FALCON. All rights reserved</p>
+    </div>
+
+    <script>
+        // JavaScript to send request to the server to run your Python file
+        function runAlgorithmPrediction() {
+            fetch('/run_algorithm', {
+                method: 'POST'
+            })
+            .then(response => response.json())
+            .then(data => console.log(data))
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - FALCON's CIPHER SPHINX</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a7083917a9.js" crossorigin="anonymous"></script>
+    
+    <style>
+        /* Universal reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Orbitron', sans-serif;
+            color: white;
+            overflow-x: hidden;
+            background: url('backup.jpg') no-repeat center center fixed; /* Fallback background image */
+            background-size: cover;
+        }
+
+        /* Click ripple effect */
+        body::before {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            width: 150px;
+            height: 150px;
+            transform: scale(0);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        body:active::before {
+            animation: ripple 0.6s ease-out;
+        }
+
+        @keyframes ripple {
+            to {
+                transform: scale(5);
+                opacity: 0;
+            }
+        }
+
+        /* Full page video background */
+        .background-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        /* Logo Styling */
+        #logo-wrapper {
+            text-align: left;
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            z-index: 3;
+        }
+
+        #logo-wrapper img {
+            width: 190px;
+            transition: transform 0.3s ease, box-shadow 0.5s ease-in-out;
+            border: 3px solid transparent;
+            padding: 5px;
+            position: relative;
+        }
+
+        #logo-wrapper img:hover {
+            animation: snakeBorder 1.5s infinite linear;
+            transform: scale(1.1);
+            box-shadow: 0 0 20px #00f6ff;
+        }
+
+        /* Snake Animation for logo and buttons */
+        @keyframes snakeBorder {
+            0% {
+                box-shadow: 0 0 5px #00f6ff, inset 0 0 12px #ff004d;
+            }
+            50% {
+                box-shadow: 0 0 10px #ff004d, inset 0 0 10px #00f6ff;
+            }
+            100% {
+                box-shadow: 0 0 5px #00f6ff, inset 0 0 10px #ff004d;
+            }
+        }
+
+        /* Header and Navigation */
+        #header {
+            position: relative;
+            z-index: 2;
+            background-color: transparent;
+            padding: 20px;
+        }
+
+        #nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+        }
+
+        #nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 22px;
+            padding: 15px;
+            transition: color 0.3s ease, transform 0.3s ease;
+            position: relative;
+        }
+
+        #nav a:hover {
+            animation: snakeBorder 1.5s infinite linear;
+            color: #0ec5ea;
+            transform: scale(1.1);
+        }
+
+        /* About Section with Animation */
+        .about-section {
+            text-align: center;
+            margin-top: 150px;
+            padding: 40px;
+            max-width: 1000px;
+            margin: auto;
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        h1 {
+            font-size: 4em;
+            margin-bottom: 20px;
+            color: #0ec5ea;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.7);
+        }
+
+        p {
+            font-size: 1.2em;
+            line-height: 1.6;
+            color: #d4dbde;
+        }
+
+        .algorithm-section {
+            text-align: left;
+            margin-top: 50px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        h2 {
+            color: #66d9ef;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            color: #ff6666;
+            font-size: 1.8em;
+            margin-bottom: 10px;
+        }
+
+        .algorithm-description {
+            font-size: 1.1em;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            color: #d4dbde;
+        }
+
+        .highlight {
+            color: #ff6666;
+            font-weight: bold;
+        }
+
+        /* Fade-in animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Button Styles */
+        .back-button {
+            margin-top: 30px;
+            padding: 10px 20px;
+            font-size: 18px;
+            border: 2px solid #0ec5ea;
+            border-radius: 5px;
+            color: #0ec5ea;
+            background-color: transparent;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s ease;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .back-button:hover {
+            animation: snakeBorder 1.5s infinite linear;
+            color: #11c2e6;
+            transform: scale(1.1);
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.7);
+        }
+
+        /* Footer */
+        #footer {
+            text-align: center;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Video background -->
+    <video class="background-video" autoplay muted loop>
+        <source src="Back.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <!-- Logo -->
+    <div id="logo-wrapper">
+        <a href="/">
+            <img src="logo.png" alt="FALCON Logo">
+        </a>
+    </div>
+
+    <!-- Header and Navigation -->
+    <div id="header">
+        <nav id="nav">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="#">FAQ</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- About Section -->
+    <div class="about-section">
+        <h1>About FALCON's CIPHER SPHINX</h1>
+        <p>
+            Welcome to FALCON's Cipher SphinX! Our platform offers cutting-edge encryption and decryption tools designed to safeguard data privacy and integrity. 
+            We focus on implementing robust algorithms to help users encrypt sensitive data, ensuring that information is securely transmitted and stored.
+        </p>
+
+        <h2>Algorithms We Use</h2>
+
+        <div class="algorithm-section">
+            <h3>AES (Advanced Encryption Standard)</h3>
+            <p class="algorithm-description">
+                AES is a symmetric encryption algorithm widely used across the world for secure data encryption. 
+                It supports key lengths of 128, 192, and 256 bits and is known for its high level of security and efficiency.
+            </p>
+
+            <h3>DES (Data Encryption Standard)</h3>
+            <p class="algorithm-description">
+                DES is an older encryption standard that operates on 64-bit blocks of data and uses a 56-bit key. Although largely obsolete due to vulnerabilities, 
+                it laid the groundwork for modern encryption techniques.
+            </p>
+
+            <h3>3DES (Triple DES)</h3>
+            <p class="algorithm-description">
+                3DES enhances DES by applying the DES algorithm three times with different keys. It offers stronger encryption than DES but is slower compared to modern algorithms like AES.
+            </p>
+
+            <h3>Blowfish</h3>
+            <p class="algorithm-description">
+                Blowfish is a fast and flexible block cipher that uses a variable-length key (up to 448 bits). It is known for its simplicity and speed,
+                making it suitable for both hardware and software encryption. Though AES has largely replaced Blowfish, it is still used in some encryption applications.
+            </p>
+
+            <h3>ChaCha20</h3>
+            <p class="algorithm-description">
+                ChaCha20 is a modern stream cipher designed as an alternative to AES. It is faster than AES on devices without hardware acceleration and is highly secure, making it ideal for high-performance encryption tasks.
+            </p>
+
+            <h3>CAST5</h3>
+            <p class="algorithm-description">
+                CAST5 is a block cipher that operates on 64-bit blocks and uses keys of length 40 to 128 bits. It is used in several encryption protocols and offers a good balance between speed and security.
+            </p>
+
+            <h3>RC2</h3>
+            <p class="algorithm-description">
+                RC2 is a variable-key-size block cipher that operates on 64-bit blocks. It was designed to be a secure alternative to DES and is commonly used in legacy systems and protocols.
+            </p>
+
+            <h3>Caesar Cipher</h3>
+            <p class="algorithm-description">
+                The Caesar Cipher is a simple substitution cipher where each letter in the plaintext is shifted by a fixed number of positions in the alphabet. While not secure by modern standards, it is one of the earliest encryption techniques.
+            </p>
+
+            <h3>Atbash Cipher</h3>
+            <p class="algorithm-description">
+                The Atbash Cipher is a simple substitution cipher where the letters of the alphabet are reversed (A becomes Z, B becomes Y, and so on). It is more of a historical cipher and is not used for serious encryption today.
+            </p>
+
+            <h3>XOR Cipher</h3>
+            <p class="algorithm-description">
+                The XOR Cipher is a simple encryption technique that works by applying the XOR (exclusive or) operation between the plaintext and a key. The key must be the same length as the plaintext for maximum security.
+            </p>
+        </div>
+
+        <!-- Back Button --><br>
+        <a href="/" class="back-button">Back to Home</a>
+    </div>
+
+    <!-- Footer -->
+    <div id="footer">
+        <p>© 2024 FALCON. All rights reserved</p>
+    </div>
+</body>
+</html>

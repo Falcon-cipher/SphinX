@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ - FALCON's CIPHER SPHINX</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a7083917a9.js" crossorigin="anonymous"></script>
+
+    <style>
+        /* Universal reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Orbitron', sans-serif;
+            color: white;
+            overflow-x: hidden;
+            background: url('backup.jpg') no-repeat center center fixed; /* Fallback background image */
+            background-size: cover;
+        }
+
+        /* Click ripple effect */
+        body::before {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            width: 150px;
+            height: 150px;
+            transform: scale(0);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        body:active::before {
+            animation: ripple 0.6s ease-out;
+        }
+
+        @keyframes ripple {
+            to {
+                transform: scale(5);
+                opacity: 0;
+            }
+        }
+
+        /* Full page video background */
+        .background-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        /* Logo Styling */
+        #logo-wrapper {
+            text-align: left;
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            z-index: 3;
+        }
+
+        #logo-wrapper img {
+            width: 190px;
+            transition: transform 0.3s ease, box-shadow 0.5s ease-in-out;
+            border: 3px solid transparent;
+            padding: 5px;
+            position: relative;
+        }
+
+        #logo-wrapper img:hover {
+            animation: snakeBorder 1.5s infinite linear;
+            transform: scale(1.1);
+            box-shadow: 0 0 20px #00f6ff;
+        }
+
+        /* Snake Animation for logo and buttons */
+        @keyframes snakeBorder {
+            0% {
+                box-shadow: 0 0 5px #00f6ff, inset 0 0 12px #ff004d;
+            }
+            50% {
+                box-shadow: 0 0 10px #ff004d, inset 0 0 10px #00f6ff;
+            }
+            100% {
+                box-shadow: 0 0 5px #00f6ff, inset 0 0 10px #ff004d;
+            }
+        }
+
+        /* Header and Navigation */
+        #header {
+            position: relative;
+            z-index: 2;
+            background-color: transparent;
+            padding: 20px;
+        }
+
+        #nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+        }
+
+        #nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 22px;
+            padding: 15px;
+            transition: color 0.3s ease, transform 0.3s ease;
+            position: relative;
+        }
+
+        #nav a:hover {
+            animation: snakeBorder 1.5s infinite linear;
+            color: #0ec5ea;
+            transform: scale(1.1);
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            margin: 100px auto;
+            padding: 20px;
+            max-width: 1000px;
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+            color: #d4dbde;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 4em;
+            color: #0ec5ea;
+            margin-bottom: 30px;
+        }
+
+        .faq-container {
+            max-width: 800px;
+            margin: auto;
+        }
+
+        .faq-item {
+            margin-bottom: 20px;
+        }
+
+        .faq-question {
+            font-size: 1.6em;
+            padding: 10px;
+            background-color: #272822;
+            border: 2px solid #0ec5ea;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            color: white;
+        }
+
+        .faq-question:hover {
+            background-color: #0ec5ea;
+            transform: scale(1.05);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #d4dbde;
+            padding: 10px;
+            border-left: 4px solid #0ec5ea;
+            margin-top: 5px;
+            border-radius: 5px;
+        }
+
+        .faq-answer.show {
+            max-height: 300px; /* Adjust height as needed */
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .faq-question, .faq-answer {
+            animation: fadeInUp 0.8s ease-in-out;
+        }
+
+        /* Button Styles */
+        .back-button {
+            margin-top: 30px;
+            padding: 10px 20px;
+            font-size: 18px;
+            border: 2px solid #0ec5ea;
+            border-radius: 5px;
+            color: #0ec5ea;
+            background-color: transparent;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s ease;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .back-button:hover {
+            animation: snakeBorder 1.5s infinite linear;
+            color: #11c2e6;
+            transform: scale(1.1);
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.7);
+        }
+
+        /* Footer */
+        #footer {
+            text-align: center;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Video background -->
+    <video class="background-video" autoplay muted loop>
+        <source src="Back.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <!-- Logo -->
+    <div id="logo-wrapper">
+        <a href="/">
+            <img src="logo.png" alt="FALCON Logo">
+        </a>
+    </div>
+
+    <!-- Header and Navigation -->
+    <div id="header">
+        <nav id="nav">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- FAQ Section -->
+    <div class="faq-section">
+        <h1>Frequently Asked Questions</h1>
+
+        <div class="faq-container">
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleAnswer(this)">
+                    What is FALCON's Cipher SphinX?
+                </div>
+                <div class="faq-answer">
+                    FALCON's Cipher SphinX is an encryption and decryption platform designed to provide users with advanced tools to protect their data.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleAnswer(this)">
+                    Which encryption algorithms are supported?
+                </div>
+                <div class="faq-answer">
+                    Our platform supports AES, DES, 3DES, Blowfish, ChaCha20, CAST5, RC2, Caesar Cipher, Atbash Cipher, and XOR Cipher.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleAnswer(this)">
+                    Is FALCON's Cipher SphinX free to use?
+                </div>
+                <div class="faq-answer">
+                    Yes, FALCON's Cipher SphinX is completely free to use. Our goal is to provide privacy and security tools to everyone.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleAnswer(this)">
+                    How can I encrypt my data?
+                </div>
+                <div class="faq-answer">
+                    Simply enter your data into our encryption tool, choose the desired algorithm, and the platform will handle the rest. It's quick and secure!
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleAnswer(this)">
+                    Can I decrypt previously encrypted data?
+                </div>
+                <div class="faq-answer">
+                    Yes! You can decrypt any data that was encrypted using our platform as long as you have the correct key.
+                </div>
+            </div>
+        </div>
+
+        <!-- Back Button --><br>
+        <a href="/" class="back-button">Back to Home</a>
+    </div>
+
+    <!-- Footer -->
+    <div id="footer">
+        <p>© 2024 FALCON. All rights reserved</p>
+    </div>
+
+    <script>
+        function toggleAnswer(element) {
+            var answer = element.nextElementSibling;
+            answer.classList.toggle('show');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Encryption Algorithms Overview</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://kit.fontawesome.com/a7083917a9.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <style>
+      /* Universal reset */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Orbitron", sans-serif;
+        color: white;
+        overflow-x: hidden;
+        position: relative;
+      }
+
+      /* Full page video background */
+      .background-video {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: -1;
+      }
+
+      h1,
+      h2,
+      h3 {
+        color: #88cc88;
+        text-align: center;
+        animation: fadeIn 2s ease-in-out;
+      }
+
+      h1 {
+        font-size: 2.5em;
+        margin-top: 20px;
+      }
+
+      h2 {
+        font-size: 2em;
+        margin: 10px 0;
+      }
+
+      h3 {
+        font-size: 1.5em;
+        color: #ff6666;
+      }
+
+      p {
+        font-size: 1.1em;
+        line-height: 1.6em;
+        margin: 15px;
+        color: #d4dbde;
+        animation: fadeInUp 1.5s ease-in-out;
+      }
+
+      .section {
+        background-color: rgba(0, 0, 0, 0.8);
+        border-left: 5px solid #44cc44;
+        border-radius: 10px;
+        margin: 20px auto;
+        width: 80%;
+        padding: 20px;
+        transition: transform 0.3s ease;
+        animation: slideIn 1.5s ease-in-out;
+      }
+
+      .section:hover {
+        transform: scale(1.03);
+      }
+
+      .example-box {
+        background-color: rgba(0, 0, 0, 0.9);
+        border-radius: 10px;
+        padding: 15px;
+        margin: 10px 0;
+        border-left: 4px solid #cc5555;
+        animation: fadeInUp 1.5s ease-in-out;
+      }
+
+      table {
+        width: 90%;
+        margin: 20px auto;
+        border-collapse: collapse;
+        color: #ccc;
+        animation: fadeInUp 1.5s ease-in-out;
+      }
+
+      table,
+      th,
+      td {
+        border: 1px solid #555;
+      }
+
+      th,
+      td {
+        padding: 10px;
+        text-align: left;
+      }
+
+      h2,
+      th {
+        background-color: #333;
+        color: #44cc44;
+        animation: pulse 2s infinite;
+      }
+      h3 {
+        background-color: #333;
+        color: #ff6666;
+        animation: pulse1 2s infinite;
+      }
+
+      /* Hover effect for table rows */
+      tr {
+        transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+      }
+
+      tr:hover {
+        background-color: #2b2b2b;
+        color: #ff6666;
+        cursor: pointer;
+      }
+
+      /* Pulse effect for table headers */
+      @keyframes pulse {
+        0% {
+          box-shadow: 0 0 10px rgba(68, 204, 68, 0.5);
+        }
+        50% {
+          box-shadow: 0 0 20px rgba(68, 204, 68, 1);
+        }
+        100% {
+          box-shadow: 0 0 10px rgba(68, 204, 68, 0.5);
+        }
+      }
+      @keyframes pulse1 {
+        0% {
+          box-shadow: 0 0 10px #ac4848;
+        }
+        50% {
+          box-shadow: 0 0 20px #ff6666;
+        }
+        100% {
+          box-shadow: 0 0 10px #6a0926;
+        }
+      }
+
+      /* Animations */
+      @keyframes fadeIn {
+        0% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+
+      @keyframes fadeInUp {
+        0% {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes slideIn {
+        0% {
+          opacity: 0;
+          transform: translateX(-100px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      .summary {
+        text-align: center;
+        margin: 50px;
+        padding: 20px;
+        background-color: #333;
+        border-radius: 10px;
+        color: #fff;
+        animation: fadeInUp 1s ease-in-out;
+      }
+
+      a {
+        color: #88cc88;
+        text-decoration: none;
+        transition: color 0.3s;
+      }
+
+      #logo-wrapper {
+        text-align: left;
+        position: absolute;
+        top: 15px;
+        left: 20px;
+        z-index: 3;
+    }
+
+    #logo-wrapper img {
+        width: 190px;
+        transition: transform 0.3s ease, box-shadow 0.5s ease-in-out;
+        border: 3px solid transparent;
+        padding: 5px;
+        position: relative;
+    }
+
+    #logo-wrapper img:hover {
+        animation: snakeBorder 1.5s infinite linear;
+        transform: scale(1.1);
+        box-shadow: 0 0 20px #00f6ff;
+    }
+      #header {
+        position: relative;
+        z-index: 2;
+        background-color: transparent;
+        padding: 20px;
+    }
+
+    #nav ul {
+        list-style: none;
+        display: flex;
+        justify-content: center;
+        gap: 25px;
+    }
+
+    #nav a {
+        color: white;
+        text-decoration: none;
+        font-size: 22px;
+        padding: 15px;
+        transition: color 0.3s ease, transform 0.3s ease;
+        position: relative;
+    }
+
+    #nav a:hover {
+        animation: snakeBorder 1.5s infinite linear;
+        font-size: 25px;
+        color: #0ec5ea;
+        transform: scale(1.1);
+    }
+
+      a:hover {
+        color: #ff6666;
+      }
+
+      .footer {
+        text-align: center;
+        padding: 20px;
+        background-color: rgba(0, 0, 0, 0.7);
+        color: #777;
+        margin-top: 40px;
+      }
+
+      /* Button Styles */
+      .back-button {
+        display: inline-block;
+        margin-top: 30px;
+        padding: 10px 20px;
+        font-size: 18px;
+        border: 2px solid #0ec5ea;
+        border-radius: 5px;
+        color: #0ec5ea;
+        background-color: transparent;
+        cursor: pointer;
+        transition: transform 0.3s, box-shadow 0.3s ease;
+        font-family: "Orbitron", sans-serif;
+        text-decoration: none;
+      }
+
+      .back-button:hover {
+        animation: snakeBorder 1.5s infinite linear;
+        color: #11c2e6;
+        transform: scale(1.1);
+        box-shadow: 0 0 15px rgba(0, 255, 255, 0.7);
+      }
+
+      /* Snake Animation */
+      @keyframes snakeBorder {
+        0% {
+          box-shadow: 0 0 5px #00f6ff, inset 0 0 12px #ff004d;
+        }
+        50% {
+          box-shadow: 0 0 10px #ff004d, inset 0 0 10px #00f6ff;
+        }
+        100% {
+          box-shadow: 0 0 5px #00f6ff, inset 0 0 10px #ff004d;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Video background -->
+    <video class="background-video" autoplay muted loop>
+      <source src="Back.mp4" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+
+    <div id="logo-wrapper">
+      <a href="#">
+          <img src="logo.png" alt="FALCON Logo">
+      </a>
+  </div>
+
+  <!-- Header and Navigation -->
+  <div id="header">
+      <nav id="nav">
+          <ul>
+              <li><a href="#">Home</a></li>
+              <li><a href="faq.html">FAQ</a></li>
+              <li><a href="about.html">About</a></li>
+          </ul>
+      </nav>
+  </div>
+    <!-- Header -->
+    <header>
+      <h1>Encryption Algorithms Overview</h1>
+    </header>
+
+    <!-- Symmetric Encryption Section -->
+    <section class="section">
+      <h2>Introduction</h2>
+      <p>
+        Encryption is the process of converting plain text into an encoded form
+        to prevent unauthorized access. The process involves various algorithms
+        that transform readable data into ciphertext, which can only be
+        deciphered using a decryption key.
+      </p>
+    </section>
+
+    <section class="section">
+      <h2>Symmetric Encryption</h2>
+      <p>
+        Symmetric encryption involves using the same key for both encryption and
+        decryption. It is fast and efficient for large amounts of data.
+      </p>
+
+      <table>
+        <tr>
+          <th>Algorithm</th>
+          <th>Key Size (bits)</th>
+          <th>Block Size (bits)</th>
+          <th>Strengths</th>
+          <th>Weaknesses</th>
+          <th>Common Use Cases</th>
+        </tr>
+        <tr>
+          <td>AES</td>
+          <td>128, 192, 256</td>
+          <td>128</td>
+          <td>High security</td>
+          <td>Slower than other algorithms in some cases</td>
+          <td>Data encryption, secure communications</td>
+        </tr>
+        <tr>
+          <td>DES</td>
+          <td>56</td>
+          <td>64</td>
+          <td>Easy to implement</td>
+          <td>Weak due to short key size</td>
+          <td>Legacy systems</td>
+        </tr>
+        <tr>
+          <td>Blowfish</td>
+          <td>32-448</td>
+          <td>64</td>
+          <td>Fast</td>
+          <td>Not as widely adopted</td>
+          <td>Software encryption</td>
+        </tr>
+        <tr>
+          <td>Twofish</td>
+          <td>128, 192, 256</td>
+          <td>128</td>
+          <td>High security</td>
+          <td>Less tested than AES</td>
+          <td>Database encryption, file encryption</td>
+        </tr>
+        <tr>
+          <td>3DES</td>
+          <td>112, 168</td>
+          <td>64</td>
+          <td>More secure than DES</td>
+          <td>Slow, small block size</td>
+          <td>Financial services, older systems</td>
+        </tr>
+        <tr>
+          <td>RC4</td>
+          <td>40-2048</td>
+          <td>Stream cipher</td>
+          <td>Fast, simple</td>
+          <td>Less secure</td>
+          <td>Wireless encryption, TLS (historically)</td>
+        </tr>
+        <tr>
+          <td>IDEA</td>
+          <td>128</td>
+          <td>64</td>
+          <td>Strong security</td>
+          <td>Patented, less flexible</td>
+          <td>DPGP, secure communications</td>
+        </tr>
+        <tr>
+          <td>Serpent</td>
+          <td>128, 192, 256</td>
+          <td>128</td>
+          <td>High security, resistant to attacks</td>
+          <td>Slower than AES</td>
+          <td>Highly secure systems, encryption tools</td>
+        </tr>
+        <tr>
+          <td>Camellia</td>
+          <td>128, 192, 256</td>
+          <td>128</td>
+          <td>Comparable to AES in speed and security</td>
+          <td>Less widely adopted</td>
+          <td>Secure communications, data encryption</td>
+        </tr>
+        <tr>
+          <td>RC5</td>
+          <td>0-2040</td>
+          <td>32, 64, 128</td>
+          <td>Flexible key and block size</td>
+          <td>Not as popular</td>
+          <td>Software encryption</td>
+        </tr>
+      </table>
+    </section>
+
+    <!-- Asymmetric Encryption Section -->
+    <section class="section">
+      <h2>Asymmetric Encryption</h2>
+      <p>
+        Asymmetric encryption uses a public key for encryption and a private key
+        for decryption. It is often used for secure communications and key
+        exchange.
+      </p>
+
+      <table>
+        <tr>
+            <th>Algorithm</th>
+            <th>Key Generation</th>
+            <th>Strengths</th>
+            <th>Weaknesses</th>
+            <th>Common Use Cases</th>
+          </tr>
+          <tr>
+            <td>RSA</td>
+            <td>Prime factorization</td>
+            <td>High security</td>
+            <td>Slower than symmetric algorithms</td>
+            <td>Digital signatures, secure key exchange</td>
+          </tr>
+          <tr>
+            <td>ECC</td>
+            <td>Elliptic curve operations</td>
+            <td>Efficient with smaller keys</td>
+            <td>More complex than RSA</td>
+            <td>Mobile encryption, digital signatures</td>
+          </tr>
+          <tr>
+            <td>DSA</td>
+            <td>Discrete logarithm</td>
+            <td>Good for digital signatures</td>
+            <td>Slower verification, not suitable for encryption</td>
+            <td>Digital signatures (e.g., in government systems)</td>
+          </tr>
+          <tr>
+            <td>ElGamal</td>
+            <td>Slow-Discrete logarithm</td>
+            <td>High security, based on DLP</td>
+            <td>Slow, large ciphertexts</td>
+            <td>Key exchange, data encryption</td>
+          </tr>
+          <tr>
+            <td>Diffie-Hellman</td>
+            <td>Fast-Discrete logarithm</td>
+            <td>Enables secure key exchange</td>
+            <td>Vulnerable to man-in-the-middle attacks</td>
+            <td>Secure key exchange, VPNs</td>
+          </tr>
+          <tr>
+            <td>RSA-OAEP</td>
+            <td>Eprime factorization with padding</td>
+            <td>Secure padding, stronger than basic RSA</td>
+            <td>Computationally intensive</td>
+            <td>Secure key exchange, encryption, digital signatures</td>
+          </tr>
+          <tr>
+            <td>NTRUEncrypt</td>
+            <td>Lattice-based</td>
+            <td>Quantum-resistant, fast</td>
+            <td>Relatively new, less widely adopted</td>
+            <td>Post-quantum encryption, secure communication</td>
+          </tr>
+          <tr>
+            <tr>
+              <td>McEliece</td>
+              <td>Error-correcting codes</td>
+              <td>Quantum-resistant, highly secure</td>
+              <td>Large key sizes, not commonly implemented</td>
+              <td>Post-quantum encryption, secure data transmission</td>
+            </tr>
+            <tr>
+              <td>Paillier</td>
+              <td>Homomorphic encryption based on composite numbers</td>
+              <td>Allows encrypted computations</td>
+              <td>Slower, less common</td>
+              <td>Privacy-preserving computations, secure voting systems</td>
+            </tr>
+          </tr>
+            <td>XTR</td>
+            <td>Trace of algebraic numbers</td>
+            <td>Efficient key generation and smaller key sizes</td>
+            <td>Less common than RSA and ECC</td>
+            <td>Secure key exchange, encryption with reduced key sizes</td>
+          </tr>
+    </table>
+    </section>
+
+    <!-- Hashing Algorithms Section -->
+    <section class="section">
+      <h2>Hashing Algorithms</h2>
+      <p>
+        Hashing algorithms generate a fixed-size hash value from input data.
+        They are primarily used for ensuring data integrity and secure password
+        storage.
+      </p>
+
+      <table>
+        <tr>
+            <th>Algorithm</th>
+            <th>Output Size (bits)</th>
+            <th>Collision Resistance</th>
+            <th>Common Use Cases</th>
+          </tr>
+          <tr>
+            <td>SHA-256</td>
+            <td>256</td>
+            <td>High</td>
+            <td>Data integrity, digital signatures</td>
+          </tr>
+          <tr>
+            <td>MD5</td>
+            <td>128</td>
+            <td>Weak</td>
+            <td>Checksums, file integrity (legacy)</td>
+          </tr>
+          <tr>
+            <td>SHA-1</td>
+            <td>160</td>
+            <td>Stronger than MD5</td>
+            <td>Collisions found, insecure</td>
+          </tr>
+          <tr>
+            <td>SHA-512</td>
+            <td>512</td>
+            <td>High</td>
+            <td>High-security applications, encryption</td>
+          </tr>
+          <tr>
+            <td>SHA-3</td>
+            <td>224, 256, 384, 512</td>
+            <td>High</td>
+            <td>Cryptography, secure storage</td>
+          </tr>
+          <tr>
+            <td>BLAKE2</td>
+            <td>256 or 512</td>
+            <td>High</td>
+            <td>Fast cryptography, hash-based message authentication</td>
+          </tr>
+          <tr>
+            <td>Argon2</td>
+            <td>Variable</td>
+            <td>High</td>
+            <td>Password hashing</td>
+          </tr>
+          <tr>
+            <td>bcrypt</td>
+            <td>Variable</td>
+            <td>High</td>
+            <td>Password hashing, secure storage</td>
+          </tr>
+          <tr>
+            <td>PBKDF2</td>
+            <td>Variable</td>
+            <td>High</td>
+            <td>Password-based key derivation, secure storage</td>
+          </tr>
+          <tr>
+            <td>Whirlpool</td>
+            <td>512</td>
+            <td>High</td>
+            <td>Digital signatures, encryption, file integrity</td>
+          </tr>
+      </table>
+    </section>
+
+    <section class="section">
+      <h2>Other Algorithm Categories</h2>
+      <p>
+        Several other types of encryption algorithms exist, including
+        homomorphic encryption, quantum-resistant algorithms, and lightweight
+        cryptography.
+      </p>
+
+      <h3>Homomorphic Encryption</h3>
+      <div class="example-box">
+        <p>
+          Allows computation on ciphertexts, which can be decrypted later
+          without exposing the plaintext.
+        </p>
+        <p><strong>Examples:</strong> BFV, CKKS, BGV</p>
+      </div>
+
+      <h3>Quantum-Resistant Algorithms</h3>
+      <div class="example-box">
+        <p>
+          These algorithms are designed to resist quantum computing attacks,
+          ensuring data remains secure in the post-quantum world.
+        </p>
+        <p>
+          <strong>Examples:</strong> Lattice-Based Cryptography, Code-Based
+          Cryptography, CRYSTALS-Kyber, FALCON
+        </p>
+      </div>
+
+      <h3>Searchable Encryption</h3>
+      <div class="example-box">
+        <p>
+          Allows encrypted data to be searched without needing to decrypt it
+          first.
+        </p>
+        <p>
+          <strong>Examples:</strong> SSE (Symmetric Searchable Encryption), PEKS
+          (Public-Key Encryption with Keyword Search)
+        </p>
+      </div>
+
+      <h3>Lightweight Cryptography</h3>
+      <div class="example-box">
+        <p>
+          Designed for resource-constrained devices, such as IoT devices, where
+          computation power and energy consumption are limited.
+        </p>
+        <p><strong>Examples:</strong> PRESENT, SIMON, SPECK</p>
+      </div>
+
+      <h3>Post-Quantum Cryptography Standardization Candidates</h3>
+      <div class="example-box">
+        <p>
+          Being considered by NIST for standardization. Applied for replacing
+          existing cryptographic algorithms that are vulnerable to quantum
+          attacks.
+        </p>
+        <p>
+          <strong>Examples:</strong> CRYSTALS-Kyber, CRYSTALS-Dilithium, FALCON,
+          SPHINCS+
+        </p>
+      </div>
+    </section>
+
+    <!-- Back Button -->
+    <div style="text-align: center">
+      <a href="/" class="back-button">Back to Home</a>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>
+        Encryption is at the forefront of modern security technology, constantly
+        evolving to meet new challenges posed by advances in computing power,
+        such as quantum computing.
+      </p>
+      <p>&copy; 2024 Encryption Algorithms Overview</p>
+    </footer>
+  </body>
+</html>
